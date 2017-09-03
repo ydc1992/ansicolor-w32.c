@@ -11,6 +11,21 @@
 # define BACKGROUND_MASK (BACKGROUND_RED|BACKGROUND_BLUE|BACKGROUND_GREEN|BACKGROUND_INTENSITY)
 #endif
 
+int 
+vasprintf(char **ptr, const char *format, va_list ap)
+{
+	int len;
+
+	len = _vscprintf_p(format, ap) + 1;
+	*ptr = (char *)malloc(len * sizeof(char));
+	if (!*ptr)
+	{
+		return -1;
+	}
+
+	return _vsprintf_p(*ptr, len, format, ap);
+}
+
 int
 __write_w32(FILE* fp, const char* buf) {
   static WORD attr_olds[2] = {-1, -1}, attr_old;
